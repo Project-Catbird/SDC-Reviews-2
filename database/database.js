@@ -113,6 +113,7 @@ const ReviewsPhotos = sequelize.define('reviews_photos', {
 
 Reviews.hasMany(ReviewsPhotos, {as: 'photos', foreignKey: 'review_id'});
 Reviews.hasMany(CharacteristicReviews, {foreignKey: 'review_id'});
+Characteristics.hasMany(CharacteristicReviews, {foreignKey: 'characteristic_id'});
 // ReviewsPhotos.belongsTo(Reviews, {foreignKey: 'review_id'});
 // CharacteristicReviews.belongsTo(Reviews, {foreignKey: 'characteristic_id'});
 

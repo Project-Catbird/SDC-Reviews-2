@@ -43,6 +43,7 @@ CREATE TABLE reviews_photos (
 
 UPDATE reviews SET date = TO_TIMESTAMP(temp_date / 1000);
 ALTER TABLE reviews DROP COLUMN temp_date;
+UPDATE reviews SET response = NULL WHERE response = 'null';
 
 \COPY characteristics(id, product_id, name) FROM '/Users/kei/Desktop/characteristics.csv' DELIMITER ',' CSV HEADER
 
@@ -50,9 +51,13 @@ ALTER TABLE reviews DROP COLUMN temp_date;
 
 \COPY reviews_photos(id, review_id, url) FROM '/Users/kei/Desktop/reviews_photos.csv' DELIMITER ',' CSV HEADER
 
+DROP INDEX IF EXISTS idx_review_id;
+DROP INDEX IF EXISTS idx_characteristics_id;
+DROP INDEX IF EXISTS idx_characteristic_reviews_id;
+DROP INDEX IF EXISTS idx_reviews_photos_id;
 CREATE INDEX idx_review_id ON public.reviews USING btree (product_id);
 CREATE INDEX idx_characteristics_id ON public.characteristics USING btree (product_id);
-CREATE INDEX idx_characteristic_reviews_id ON public.characteristic_reviews USING btree (review_id);
+CREATE INDEX idx_characteristic_reviews_id ON public.characteristic_reviews USING btree (characteristic_id);
 CREATE INDEX idx_reviews_photos_id ON public.reviews_photos USING btree (review_id);
 
 SELECT setval('reviews_id_seq', (SELECT MAX(id) FROM "reviews"));
