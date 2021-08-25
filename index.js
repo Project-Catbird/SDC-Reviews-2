@@ -1,10 +1,11 @@
 require('dotenv').config();
+require('newrelic');
 const router = require('./routes.js');
 
 var express = require('express');
 var app = express();
 var cors = require('cors');
-// app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));

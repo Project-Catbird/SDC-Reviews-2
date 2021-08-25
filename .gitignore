@@ -1,6 +1,7 @@
 node_modules
 .env
-*.csv
+database/csv
 .DS_Store
 /tests
 *.pem
+/doc
